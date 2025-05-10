@@ -1,15 +1,4 @@
-# rtw88 downstream 🐧
-### This is a downstream repo with a primary purpose of supporting development, testing and maintenance for the Realtek rtw88 series of WiFi 5 drivers in the Linux kernel.
-
-The most recent addition to this repo is the driver for the RTL8814AU chipset. Testing is needed so if you have an adapter based on the RTL8814AU chipset, please test and report.
-
-Update: There is now also a driver for RTL8814AE PCIe cards, ID 10ec:8813. lspci may call it RTL8813AE, same thing. Please test and report if you still have this card.
-
-🌟 The code in this repo stays in sync with the `wireless-next` repository, with additional changes to accommodate kernel API changes over time.
-
-📌 **Note**: The `wireless-next` repo contains the code set for the ***next*** kernel version. If kernel 6.X is out, kernel mainline repo is on 6.X+1-rcY, and `wireless-next` targets kernel 6.X+2 material.
-
----
+# rtw88 
 
 ## Compatibility
 Compatible with **Linux kernel versions 5.4 and newer** as long as your distro hasn't modified any kernel APIs. RHEL and all distros based on RHEL will have modified kernel APIs and are unlikely to be compatible with this driver.
@@ -22,17 +11,6 @@ Compatible with **Linux kernel versions 5.4 and newer** as long as your distro h
 - **USB** : RTL8814AU, RTL8821AU, RTL8821CU, RTL8822BU, RTL8822CU
 
 ---
-
-## Issues 🚨
-Report problems in Issues after you have checked the [Q&A](#qa) at bottom of this README.
-
-⚠️ If you see a line such as:
-
-`make[1]: *** /lib/modules/5.17.5-300.fc36.x86_64/build: No such file or directory.` **Stop.**
-
-This indicates **you have NOT installed the kernel headers.** 
-
-Use the following instructions for that step.
 
 ## Installation Guide
 
@@ -239,15 +217,3 @@ For Arch-based distro users, run
 sudo pacman -Rn rtw88-dkms-git
 ```
 
-### Q2: My Wi-Fi adapter is plugged in an USB 3 port, how can I keep it in USB 2 mode to avoid potential interference in 2.4 GHz band?
-The module `rtw_usb` has a parameter named `switch_usb_mode` which can enable or disable USB mode switching, setting it to "n" will keep your adapter in USB 2 mode.
-
-Steps:
-1. Open /etc/modprobe.d/rtw88.conf with your preferred editor.
-2. Change `switch_usb_mode=y` to `switch_usb_mode=n` in line 7.
-3. Unplug the Wi-Fi adapter.
-4. Reboot (or [unload the rtw88 drivers](#3-how-to-loadunload-kernel-modules-aka-drivers))
-5. Plug your Wi-Fi adapter back.
-
-### Q3: My Wi-Fi adapter still doesn't work after installing this driver and `lsusb` shows it is in CD-ROM mode, what should I do?
-Install `usb_modeswitch` which can switch your adapter from CD-ROM mode to Wi-Fi mode and then your Wi-Fi adapter should be in Wi-Fi mode after reboot.
